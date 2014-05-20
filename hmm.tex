@@ -1,0 +1,50 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+ 
+\usepackage{tikz}
+\begin{document}
+ 
+\tikzstyle{state}=[shape=circle,draw=black!50,minimum size = 2cm,node distance = 5cm]
+\tikzstyle{observation}=[shape=rectangle,draw=black!50]
+\tikzstyle{lightedge}=[<-,dotted]
+\tikzstyle{mainstate}=[state,thick]
+\tikzstyle{mainedge}=[<-,thick]
+
+\begin{figure}[htbp]
+\begin{center}
+\begin{tikzpicture}
+
+
+\node [state] (climb) at (0,0) {Climb}
+	edge[mainedge,loop above,distance = 1cm] node [above]{0.4} (climb);
+\node [state, right of=climb] (not_climb) {Not Climb}
+	edge[mainedge,->,bend right = -45] node [above]{0.1} (climb)
+	edge[mainedge,<-,bend right = 45] node [above]{0.6} (climb)
+	edge[mainedge,loop above,distance = 1cm] node [above]{0.9} (not_climb);
+
+\node [left of= climb,node distance = 2cm] (initial_climb) { }
+	edge[mainedge,->] node [above]{0.98} (climb);
+	
+\node [right of = not_climb,node distance = 2cm](intial_not_climb) { }
+	edge[mainedge,->] node [above]{0.02} (not_climb);
+
+\node [observation, below of = climb, node distance = 3cm, xshift = - 1cm] {Injure}
+	edge [lightedge, <-] node [left] {0.8} (climb);
+\node [observation, below of = climb, node distance = 3cm, xshift =  1cm] {Not Injure}
+	edge [lightedge, <-] node [right] {0.2} (climb);
+\node [observation, below of = not_climb, node distance = 3cm, xshift = - 1cm] {Injure}
+	edge [lightedge, <-] node [left] {0.1} (not_climb);
+\node [observation, below of = not_climb, node distance = 3cm, xshift =  1cm] {Not Injure}
+	edge [lightedge, <-] node [right] {0.9} (not_climb);
+
+
+\end{tikzpicture}
+\end{center}
+\caption{Hidden Markov Model}
+\end{figure}
+
+
+\end{document}
